@@ -1,0 +1,162 @@
+<!DOCTYPE html">
+<html>
+ <meta charset="UTF-8">
+  <title>搜索</title>
+  <script type="text/javascript" src="js/jquery.js"></script>
+   <head>
+  <style type="text/css">
+  *{
+    padding:0;
+    margin:0;
+    list-style: none;
+  }
+    #container{
+        position:absolute;
+        left:50%;
+        top: 10px;
+    }
+    #content{
+        float:left;
+        position:relative;
+        right:50%;
+    }
+    input{
+        border:0;
+        width:288px;
+        height:30px;
+        font-size:16px;
+        padding:0 5px;
+        line-height:30px;
+    }
+    .item{
+        padding:3px 5px;
+        cursor:pointer;
+    }
+    .addbg{
+        background:#87A900;
+    }
+    .first{
+        border:solid #87A900 2px;
+        /*width:300px;*/
+    }
+    #append{
+        border:solid #87A900 2px;
+        border-top:0;
+        display:none;
+    }
+
+  </style>
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+ </head>
+ <body>
+    <div id="container">
+    <div id="content">
+        <div class="first"><input id="kw" onKeyup="getContent(this);" /></div>
+        <div id="append"></div>
+    </div>
+    </div>
+    <div id="bbox">
+    <ul>
+        <li><a href="http://www.baidu.com/">百度</a></li>
+        <li><a href="http://www.w3school.com.cn/">w3school</a></li>
+        <li><a href="http://www.runoob.com/">菜鸟教程</a></li>
+        <li><a href="http://www.imooc.com/">慕课网</a></li>
+    </ul>
+  
+    </div>
+ </body>
+</html>
+<script type="text/javascript">
+var data = [
+    "w3school",
+    "菜鸟教程",
+    "慕课网",
+    "8658568768768",
+    "9678956743547456745654",
+    "235555555555555555555555555",
+    "2354234523523",
+    "你懂得",
+    "你为我着迷",
+    "你是我的眼"
+];
+$(document).ready(function(){
+    $('#kw').keydown(function(e){
+        e = e || window.event;
+        var keycode = e.which ? e.which : e.keyCode;
+        if(keycode == 38){
+            if(jQuery.trim($("#append").html())==""){
+                return;
+            }
+            movePrev();
+        }else if(keycode == 40){
+            if(jQuery.trim($("#append").html())==""){
+                return;
+            }
+            $("#kw").blur();
+            if($(".item").hasClass("addbg")){
+                moveNext();
+            }else{
+                $(".item").removeClass('addbg').eq(0).addClass('addbg');
+            }
+           
+        }else if(keycode == 13){
+            console.log($(this).val())
+            dojob();
+        }
+    });
+
+    var movePrev = function(){
+        $("#kw").blur();
+        var index = $(".addbg").prevAll().length;
+        if(index == 0){
+            $(".item").removeClass('addbg').eq($(".item").length-1).addClass('addbg');
+        }else{
+            $(".item").removeClass('addbg').eq(index-1).addClass('addbg');
+        }
+    }
+   
+    var moveNext = function(){
+        var index = $(".addbg").prevAll().length;
+        if(index == $(".item").length-1){
+            $(".item").removeClass('addbg').eq(0).addClass('addbg');
+        }else{
+            $(".item").removeClass('addbg').eq(index+1).addClass('addbg');
+        }
+       
+    }
+   
+    var dojob = function(){
+        $("#kw").blur();
+        var value = $(".addbg").text();
+        $("#kw").val(value);
+        $("#append").hide().html("");
+    }
+});
+function getContent(obj){
+    var kw = jQuery.trim($(obj).val());
+    if(kw == ""){
+        $("#append").hide().html("");
+        return false;
+    }
+    var html = "";
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].indexOf(kw) >= 0) {
+            html = html + "<div class='item' onmouseenter='getFocus(this)' onClick='getCon(this);'>" + data[i] + "</div>"
+        }
+    }
+    if(html != ""){
+        $("#append").show().html(html);
+    }else{
+        $("#append").hide().html("");
+    }
+}
+function getFocus(obj){
+    $(".item").removeClass("addbg");
+    $(obj).addClass("addbg");
+}
+function getCon(obj){
+    var value = $(obj).text();
+    $("#kw").val(value);
+    $("#append").hide().html("");
+}
+</script>

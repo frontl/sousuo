@@ -1,0 +1,43 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+#bbox {
+  min-width: 1300px;
+  height: 100%;
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+#bbox ul {
+  height: 100%;
+  width: 100%;
+  margin-top: 55px;
+  overflow: auto;
+}
+
+#bbox ul li {
+  margin: 0 auto;
+  padding: 3px 10px;
+  margin: 3px 10px;
+  height: 30px;
+  width: 23%;
+  border: 1px solid #000;
+  box-sizing: border-box;
+  float: left;
+  cursor: pointer;
+}
+
+#bbox ul li a {
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  line-height: 22px;
+}
